@@ -5,7 +5,8 @@ public class Arm
 {
     private static final double FORCE_GRAVITY = 9.8;
 
-    private Arm subArm; //if there is another arm joined.
+    private Arm subArm; //if there is another arm joined
+    private Arm parentArm;
     private Motor motor;
     private double distance_to_center_of_mass;
     private double mass;
@@ -33,5 +34,7 @@ public class Arm
         sum += Math.sin(this.torque_angle_radians) * this.distance_to_center_of_mass * FORCE_GRAVITY; //calculate moment on arm
         return sum;
     }
+
+
 
 }
