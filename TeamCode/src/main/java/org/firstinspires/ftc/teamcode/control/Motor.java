@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class Motor
 {
     public static final double NEWTON_METER_POWER_CONSERVION = 0.1047;
-
+    public int encoderPlusesPerRevolution;
+    public int gearRatio;
     public DcMotor motor;
     public Encoder encoder;
     public double free_rpm;

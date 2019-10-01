@@ -16,6 +16,7 @@ public class PID
     private double derivative;
 
     private int targetPos;
+    private int lastPos;
 
 
 
@@ -28,12 +29,21 @@ public class PID
 
     public double calculate()
     {
+        int currentPos = this.encoder.getPosition();
         this.encoder.update();
-        double distance = this.targetPos - this.encoder.getPosition();
+        double distance = this.targetPos - currentPos;
+        integral += (currentPos - lastPos)/2;
         this.derivative = this.encoder.getRate();
         double power = 0;
         power += distance * this.K_p;
         power += this.derivative * this.K_d;
+        power += this.integral * this.K_i;
+        this.lastPos = currentPos;
         return power;
+    }
+
+    public void setTargetPos(int pos)
+    {
+        this.targetPos = pos;
     }
 }
