@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.control.PID;
 
 public class DriveBase
 {
+    private static final double WHEEL_CIRCUMFRENCE = 0.12;
     private Motor left;
     private Motor right;
     private Motor up;
@@ -50,14 +51,21 @@ public class DriveBase
     }
 
 
-    public void translateVertical()
+    public void translateVertical(double meters)
     {
-
+        this.upPID.setTargetPos((int)((meters/WHEEL_CIRCUMFRENCE) * this.up.encoderPlusesPerRevolution));
+        this.downPID.setTargetPos((int)((meters/WHEEL_CIRCUMFRENCE) * this.down.encoderPlusesPerRevolution));
     }
 
-    public void translateHorizental()
+    public void translateHorizental(double meters)
     {
+        this.leftPID.setTargetPos((int)((meters/WHEEL_CIRCUMFRENCE) * this.left.encoderPlusesPerRevolution));
+        this.rightPID.setTargetPos((int)((meters/WHEEL_CIRCUMFRENCE) * this.right.encoderPlusesPerRevolution));
+    }
 
+    public void rotate(double degrees)
+    {
+        //radius of robotn / degress /wheel_circumfrence  * encoderpluses
     }
 
 
