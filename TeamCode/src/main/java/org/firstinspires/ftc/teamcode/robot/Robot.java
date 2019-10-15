@@ -1,38 +1,19 @@
 package org.firstinspires.ftc.teamcode.robot;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.control.Arm;
-import org.firstinspires.ftc.teamcode.control.Motor;
 import org.firstinspires.ftc.teamcode.subsystem.DriveBase;
+import org.firstinspires.ftc.teamcode.control.Motor;
 
-@TeleOp(name="test", group = "Linear OpMode")
-
-public class Robot extends LinearOpMode
+public class Robot
 {
+    public DriveBase driveBase;
+    public Servo servo;
 
-    private DriveBase driveBase;
-
-    private void Robot_init()
+    public Robot(HardwareMap map)
     {
-        this.driveBase = new DriveBase(new Motor(hardwareMap.dcMotor.get("up"), true), new Motor(hardwareMap.dcMotor.get("down"), true), new Motor(hardwareMap.dcMotor.get("left"), true), new Motor(hardwareMap.dcMotor.get("right"), true));
-
-    }
-
-    @Override
-    public void runOpMode() throws InterruptedException
-    {
-        this.Robot_init();
-        waitForStart();
-
-        while (opModeIsActive())
-        {
-            this.driveBase.teleOpdrive(gamepad1);
-        }
-
+       this.driveBase = new DriveBase(new Motor(map.dcMotor.get("up"), false), new Motor(map.dcMotor.get("down"), false), new Motor(map.dcMotor.get("left"), false), new Motor(map.dcMotor.get("right"), false));
+        this.servo = map.servo.get("intake");
     }
 }

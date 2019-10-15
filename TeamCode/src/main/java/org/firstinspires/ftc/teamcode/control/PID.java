@@ -17,28 +17,29 @@ public class PID
 
     private int targetPos;
     private int lastPos;
-
+    private double lastDistance;
 
 
     public PID(Motor.Encoder encoder, double Ki, double Kd, double Kp)
     {
         this.encoder = encoder;
         this.integral = 0;
-
+        this.lastDistance = 0;
     }
 
     public double calculate()
     {
-        int currentPos = this.encoder.getPosition();
         this.encoder.update();
+        int currentPos = this.encoder.getPosition();
         double distance = this.targetPos - currentPos;
-        integral += (currentPos - lastPos)/2;
+        integral += ((lastDistance - distance) * this.encoder.getDeltaT())/2;
         this.derivative = this.encoder.getRate();
         double power = 0;
         power += distance * this.K_p;
         power += this.derivative * this.K_d;
         power += this.integral * this.K_i;
         this.lastPos = currentPos;
+        this.lastDistance = distance;
         return power;
     }
 
@@ -46,4 +47,6 @@ public class PID
     {
         this.targetPos = pos;
     }
+
+
 }

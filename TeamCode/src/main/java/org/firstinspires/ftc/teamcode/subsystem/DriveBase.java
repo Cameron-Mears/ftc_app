@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.control.PID;
 public class DriveBase
 {
     private static final double WHEEL_CIRCUMFRENCE = 0.12;
+    private static final double TURNING_RADIUS = 0.1;
     private Motor left;
     private Motor right;
     private Motor up;
@@ -34,6 +35,7 @@ public class DriveBase
     {
         double leftPower, rightPower, upPower, downPower;
         leftPower = rightPower = upPower = downPower = 0;
+
         leftPower += gamepad.left_stick_x;
         rightPower += gamepad.left_stick_x;
         upPower += gamepad.left_stick_y;
@@ -44,13 +46,19 @@ public class DriveBase
         upPower += gamepad.right_stick_x;
         downPower -= gamepad.right_stick_x;
 
-        this.left.motor.setPower(leftPower);
+        this.left.motor.setPower(-leftPower);
         this.right.motor.setPower(rightPower);
-        this.up.motor.setPower(upPower);
+        this.up.motor.setPower(-upPower);
         this.down.motor.setPower(downPower);
     }
 
-
+    public void autoDrive()
+    {
+        this.up.motor.setPower(this.upPID.calculate());
+        this.down.motor.setPower(this.downPID.calculate());
+        this.left.motor.setPower(this.leftPID.calculate());
+        this.right.motor.setPower(this.rightPID.calculate());
+    }
     public void translateVertical(double meters)
     {
         this.upPID.setTargetPos((int)((meters/WHEEL_CIRCUMFRENCE) * this.up.encoderPlusesPerRevolution));
@@ -65,7 +73,11 @@ public class DriveBase
 
     public void rotate(double degrees)
     {
-        //radius of robotn / degress /wheel_circumfrence  * encoderpluses
+        double meters = TURNING_RADIUS/degrees;
+        this.leftPID.setTargetPos((int)((meters/WHEEL_CIRCUMFRENCE) * this.left.encoderPlusesPerRevolution));
+        this.rightPID.setTargetPos((int)((-meters/WHEEL_CIRCUMFRENCE) * this.right.encoderPlusesPerRevolution));
+        this.upPID.setTargetPos((int)((-meters/WHEEL_CIRCUMFRENCE) * this.up.encoderPlusesPerRevolution));
+        this.downPID.setTargetPos((int)((meters/WHEEL_CIRCUMFRENCE) * this.down.encoderPlusesPerRevolution));
     }
 
 

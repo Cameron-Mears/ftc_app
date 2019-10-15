@@ -24,6 +24,7 @@ public class Motor
         private double rate;
         private int position;
         private long lastTime;
+        private double deltaT;
 
         public Encoder(DcMotor motor, int startPos)
         {
@@ -38,10 +39,10 @@ public class Motor
         public void update()
         {
             long now = System.currentTimeMillis();
-            double delta = (double) (now - this.lastTime);
+            this.deltaT = (double) (now - this.lastTime);
             this.lastTime = now;
             int newPos = this.motor.getCurrentPosition();
-            this.rate = (newPos - this.position)/delta;
+            this.rate = (newPos - this.position)/this.deltaT;
             this.position = newPos;
         }
 
@@ -53,6 +54,11 @@ public class Motor
         public double getRate()
         {
             return this.rate;
+        }
+
+        public double getDeltaT()
+        {
+            return this.deltaT;
         }
 
     }
