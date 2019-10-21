@@ -60,9 +60,10 @@ public class Arm
 
         if (depth % 2 != 0) calculationAngle = 180 - calculationAngle; //odd call 180 - angle
 
-        calculationAngle = Math.toRadians(90 - calculationAngle);
-        distances += Math.cos(90 + calculationAngle);
-        sum += Math.sin(calculationAngle) * (this.distanceToCenterOfMass + totalDistance) * FORCE_GRAVITY; //calculate moment on arm
+        calculationAngle = Math.toRadians(calculationAngle);
+        double cos = Math.cos(calculationAngle);
+        distances += cos * this.length;
+        sum += cos * (this.distanceToCenterOfMass + totalDistance) * FORCE_GRAVITY; //calculate moment on arm
         if (this.subArm != null) sum += this.subArm.sum_torque(sum, angles, depth, distances); //sum the torque acting on subjoints
         return sum;
     }
