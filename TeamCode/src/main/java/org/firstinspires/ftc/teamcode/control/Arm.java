@@ -41,30 +41,27 @@ public class Arm
 
     public double calculate_torque_compensation()
     {
-        double sum = this.sum_torque(0 , 0, 0, 0);
+        double sum = this.sum_torque(0 , 0, 0, 0, 0);
         PointMass point = this.getCenterOfMass(0, 0, 0, 0, 0);
         double compensationPower = (sum * this.motor.free_rpm * Motor.NEWTON_METER_POWER_CONSERVION)/this.motor.max_power;
         return compensationPower;
     };
 
     //make sure when calling this method sum is zero
-    public double sum_torque(double sum, double angles, int depth, double distances)
+    public double sum_torque(double sum, double angles, int depth, double distancesX, double distancesY)
     {
         depth ++;
         double armAngle = this.computeAngle();
         angles += armAngle;
 
         double calculationAngle = 0;
-        double totalDistance = 0;
-
-
         if (depth % 2 != 0) calculationAngle = 180 - calculationAngle; //odd call 180 - angle
 
         calculationAngle = Math.toRadians(calculationAngle);
-        double cos = Math.cos(calculationAngle);
-        distances += cos * this.length;
-        sum += cos * (this.distanceToCenterOfMass + totalDistance) * FORCE_GRAVITY; //calculate moment on arm
-        if (this.subArm != null) sum += this.subArm.sum_torque(sum, angles, depth, distances); //sum the torque acting on subjoints
+        sum += Math.sin((Math.PI)/2 - calculationAngle) * (this.distanceToCenterOfMass + Math.hypot(distancesX, distancesY)) * FORCE_GRAVITY; //calculate moment on arm
+        distancesX += Math.cos(calculationAngle) * this.length;
+        distancesY += Math.sin(calculationAngle) * this.length;
+        if (this.subArm != null) sum += this.subArm.sum_torque(sum, angles, depth, distancesX, distancesY); //sum the torque acting on subjoints
         return sum;
     }
     /*
