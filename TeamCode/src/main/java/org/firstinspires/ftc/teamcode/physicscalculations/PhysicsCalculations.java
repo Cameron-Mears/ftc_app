@@ -42,7 +42,7 @@ public final class PhysicsCalculations
         cos = Math.cos(angle);
         sin = Math.sin(angle);
         PointMass[] transformed = PhysicsCalculations.rotationalTransformPoints(arm.attachments, angles);
-        for (PointMass pointMass: arm.attachments)
+        for (PointMass pointMass: transformed)
         {
             distance = Math.hypot( baseX + pointMass.getX(), baseY + pointMass.getY());
             sum += distance * distance * pointMass.getMass();
