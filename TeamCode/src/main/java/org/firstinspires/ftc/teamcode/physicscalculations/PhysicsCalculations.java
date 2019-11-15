@@ -55,4 +55,6 @@ public final class PhysicsCalculations
         if (arm.subArm == null) return sum;
         else return computeMomentOfInertia( baseX, baseY, sum, angles, arm.subArm);
     }
+
+
 }

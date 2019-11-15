@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.control.Motor;
 
 public class PID
 {
-    private Motor.Encoder encoder;
+    private TestMotor.Encoder encoder;
     private double K_p;
     private double K_d;
     private double K_i;
@@ -20,7 +20,7 @@ public class PID
     private double lastDistance;
 
 
-    public PID(Motor.Encoder encoder, double Ki, double Kd, double Kp)
+    public PID(TestMotor.Encoder encoder, double Ki, double Kd, double Kp)
     {
         this.encoder = encoder;
         this.integral = 0;

@@ -7,6 +7,7 @@ package org.firstinspires.ftc.teamcode.control;
  including any sub arms
 */
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.physicscalculations.*;
 
 public class Arm
@@ -20,6 +21,8 @@ public class Arm
     public final double mass; //total mass
     public final double massOfBeam; //mass of the beam
     public PointMass[] attachments;
+    private double rate;
+    private double gearing;
     public final double length;
     private double relAngle;
     public Arm(Motor motor, Arm subArm, double mass, double massOfBeam, double length, double distanceToCenterOfMass, double K_i, double K_d, double K_p)
@@ -114,6 +117,11 @@ public class Arm
     {
         this.motor.motor.setPower(this.calculate_torque_compensation() + this.pid.calculate());
     }
+
+
+
+
+
 
 
 

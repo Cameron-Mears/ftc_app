@@ -23,8 +23,13 @@ public class TeleOpRun extends LinearOpMode
         waitForStart();
         while (opModeIsActive())
         {
+            Time.loopStartTime = System.currentTimeMillis();
             this.robot.driveBase.teleOpdrive(gamepad1);
             this.robot.servo.setPosition(gamepad2.left_stick_y * 180);
+            long now = System.currentTimeMillis();
+            Time.lastDelta = now - Time.loopStartTime;
+            Time.averageDelta += Time.lastDelta;
+            Time.averageDelta /= 2;
         }
 
     }
