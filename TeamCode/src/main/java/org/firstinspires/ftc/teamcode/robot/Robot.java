@@ -13,7 +13,6 @@ public class Robot
 
     public Robot(HardwareMap map)
     {
-       this.driveBase = new DriveBase(new Motor(map.dcMotor.get("up"), false), new Motor(map.dcMotor.get("down"), false), new Motor(map.dcMotor.get("left"), false), new Motor(map.dcMotor.get("right"), false));
         this.servo = map.servo.get("intake");
     }
 }

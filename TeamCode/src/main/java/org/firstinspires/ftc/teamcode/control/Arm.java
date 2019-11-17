@@ -27,7 +27,7 @@ public class Arm
     private double relAngle;
     public Arm(Motor motor, Arm subArm, double mass, double massOfBeam, double length, double distanceToCenterOfMass, double K_i, double K_d, double K_p)
     {
-        pid = new PID(motor.encoder, 0, 0,0 );
+
         this.motor = motor;
         this.subArm = subArm;
         this.massOfBeam = massOfBeam;
@@ -42,13 +42,7 @@ public class Arm
         this.attachments = masses;
     }
 
-    public double calculate_torque_compensation()
-    {
-        double sum = this.computeTorque(0 , 0, 0, 0, 0);
-        PointMass point = this.getCenterOfMass(0, 0, 0, 0, 0);
-        double compensationPower = (sum * this.motor.free_rpm * Motor.NEWTON_METER_POWER_CONSERVION)/this.motor.max_power;
-        return compensationPower;
-    };
+
 
     //make sure when calling this method sum is zero
     public double computeTorque(double sum, double angles, int depth, double distancesX, double distancesY)
@@ -102,21 +96,9 @@ public class Arm
 
     public double computeAngle()
     {
-        this.motor.encoder.update();
-        double encoderPosition = this.motor.encoder.getPosition();
-        double angleDegrees = ((encoderPosition % this.motor.encoderPlusesPerRevolution)/this.motor.encoderPlusesPerRevolution) * 360;
-        return angleDegrees;
+        return 0;
     }
 
-    public void setTargetAngle(double angleDegrees)
-    {
-        this.pid.setTargetPos((int)(angleDegrees/360 * this.motor.encoderPlusesPerRevolution));
-    }
-
-    public void update()
-    {
-        this.motor.motor.setPower(this.calculate_torque_compensation() + this.pid.calculate());
-    }
 
 
 

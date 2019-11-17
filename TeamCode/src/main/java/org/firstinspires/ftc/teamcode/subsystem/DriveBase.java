@@ -24,11 +24,6 @@ public class DriveBase
         this.down = down;
         this.left = left;
         this.right = right;
-
-        this.rightPID = new PID(right.encoder, 0, 0, 0);
-        this.leftPID = new PID(left.encoder, 0, 0, 0);
-        this.downPID = new PID(down.encoder, 0, 0, 0);
-        this.upPID = new PID(up.encoder, 0, 0, 0);
     }
 
     public void teleOpdrive(Gamepad gamepad)
@@ -46,39 +41,13 @@ public class DriveBase
         upPower += gamepad.right_stick_x;
         downPower -= gamepad.right_stick_x;
 
-        this.left.motor.setPower(-leftPower);
-        this.right.motor.setPower(rightPower);
-        this.up.motor.setPower(-upPower);
-        this.down.motor.setPower(downPower);
     }
 
     public void autoDrive()
     {
-        this.up.motor.setPower(this.upPID.calculate());
-        this.down.motor.setPower(this.downPID.calculate());
-        this.left.motor.setPower(this.leftPID.calculate());
-        this.right.motor.setPower(this.rightPID.calculate());
-    }
-    public void translateVertical(double meters)
-    {
-        this.upPID.setTargetPos((int)((meters/WHEEL_CIRCUMFRENCE) * this.up.encoderPlusesPerRevolution));
-        this.downPID.setTargetPos((int)((meters/WHEEL_CIRCUMFRENCE) * this.down.encoderPlusesPerRevolution));
+
     }
 
-    public void translateHorizental(double meters)
-    {
-        this.leftPID.setTargetPos((int)((meters/WHEEL_CIRCUMFRENCE) * this.left.encoderPlusesPerRevolution));
-        this.rightPID.setTargetPos((int)((meters/WHEEL_CIRCUMFRENCE) * this.right.encoderPlusesPerRevolution));
-    }
-
-    public void rotate(double degrees)
-    {
-        double meters = TURNING_RADIUS/degrees;
-        this.leftPID.setTargetPos((int)((meters/WHEEL_CIRCUMFRENCE) * this.left.encoderPlusesPerRevolution));
-        this.rightPID.setTargetPos((int)((-meters/WHEEL_CIRCUMFRENCE) * this.right.encoderPlusesPerRevolution));
-        this.upPID.setTargetPos((int)((-meters/WHEEL_CIRCUMFRENCE) * this.up.encoderPlusesPerRevolution));
-        this.downPID.setTargetPos((int)((meters/WHEEL_CIRCUMFRENCE) * this.down.encoderPlusesPerRevolution));
-    }
 
 
 }
