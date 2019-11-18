@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.util.KeyInUseException;
 
 import java.util.LinkedList;
 
-public class MotorController
+public class MotorHandler
 {
 
     private HashTable<String, Motor> table;

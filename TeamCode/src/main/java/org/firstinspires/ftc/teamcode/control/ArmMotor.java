@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.control;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.hardware.ExpansionHubMotor;
 import org.firstinspires.ftc.teamcode.physicscalculations.PointMass;
 
 public class ArmMotor implements Motor
@@ -17,6 +18,14 @@ public class ArmMotor implements Motor
     {
         long now = System.currentTimeMillis();
         int newPos = this.getPosition();
+    }
+
+
+
+    @Override
+    public void setTargetPosition(double position)
+    {
+
     }
 
     @Override
@@ -42,7 +51,7 @@ public class ArmMotor implements Motor
     private double outputPower;
     private double rate;
     private double lastPos;
-    private DcMotor motor;
+    private ExpansionHubMotor motor;
     private long lastCallTime;
     private MotorProperties properties;
     public ArmMotor()
@@ -50,6 +59,15 @@ public class ArmMotor implements Motor
 
     }
 
+    @Override
+    public double currentDrawAmperes()
+    {
+        return 0;
+    }
 
-
+    @Override
+    public CurrentTorqueRelation getCurrentTorqueRelation()
+    {
+        return null;
+    }
 }
